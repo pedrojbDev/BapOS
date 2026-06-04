@@ -1,0 +1,26 @@
+# Toolchain local
+toolchain/
+
+# Build outputs
+*.o
+*.a
+*.elf
+*.bin
+*.iso
+*.img
+
+# Logs
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
