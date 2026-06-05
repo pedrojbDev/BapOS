@@ -1,7 +1,7 @@
-# Toolchain local
+# Local toolchain
 toolchain/
 
-# Build outputs
+# Build artifacts
 *.o
 *.a
 *.elf
@@ -9,16 +9,15 @@ toolchain/
 *.iso
 *.img
 
+# Boot image staging
+isodir/
+
 # Logs
 *.log
 
-# Editor
+# Editors
 .vscode/
 .idea/
-
-# OS files
-.DS_Store
-Thumbs.db
 
 # Temporary files
 *.tmp
