@@ -80,13 +80,35 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
     terminal_buffer[index] = vga_entry(c, color);
 }
 
+void terminal_scroll(void)
+{
+    for (size_t y = 1; y < VGA_HEIGHT; y++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) {
+            const size_t from_index = y * VGA_WIDTH + x;
+            const size_t to_index = (y - 1) * VGA_WIDTH + x;
+
+            terminal_buffer[to_index] = terminal_buffer[from_index];
+        }
+    }
+
+    const size_t last_row = VGA_HEIGHT - 1;
+
+    for (size_t x = 0; x < VGA_WIDTH; x++) {
+        const size_t index = last_row * VGA_WIDTH + x;
+        terminal_buffer[index] = vga_entry(' ', terminal_color);
+    }
+
+    terminal_row = VGA_HEIGHT - 1;
+    terminal_column = 0;
+}
+
 void terminal_putchar(char c)
 {
 
     if (c == '\n') {
         terminal_column = 0;
         if (++terminal_row == VGA_HEIGHT)
-            terminal_row = 0;
+            terminal_scroll();
         return;
     } 
 
@@ -95,7 +117,7 @@ void terminal_putchar(char c)
     if (++terminal_column == VGA_WIDTH) {
         terminal_column = 0;
         if (++terminal_row == VGA_HEIGHT)
-            terminal_row = 0;
+            terminal_scroll();
     }
 }
 
@@ -113,7 +135,7 @@ void terminal_writestring(const char* data)
 void kernel_main(void)
 {
  terminal_initialize();
- terminal_writestring("Hello from Bap OS!\n");
- terminal_writestring("Kernel iniciado\n");
- terminal_writestring("Terminal VGA funcionando\n");
+ for (int i = 0; i < 30; i++) {
+        terminal_writestring("Linha de teste do Bap OS\n");
+    }
 }
